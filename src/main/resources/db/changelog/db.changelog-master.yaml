@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: mdewayne
+      changes:
+        - sqlFile:
+            path: db/changelog/V1_create_users_table.sql
