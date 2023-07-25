@@ -5,8 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping
 
 @Controller
 class MyController {
-    @GetMapping("/")
-    fun home(): String {
-        return "main"
+    @GetMapping("/hello")
+    fun hello(): String {
+        return "hello"
+    }
+    @GetMapping("/login")
+    fun login(): String {
+        return "login"
+    }
+    @GetMapping("/registration")
+    fun registration(): String {
+        return "registration"
     }
 }
