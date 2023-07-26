@@ -14,12 +14,13 @@ create table appUsers (
 --     private var locked: Boolean,
 --     private var enabled: Boolean
 
+-- all encrypted passwords same - "check"
 INSERT INTO appUsers (name, email, password, locked, enabled)
-VALUES ('FalseTrue', 'FalseTrue@email.com', 'pass', false, true);
+VALUES ('FalseTrue', 'FalseTrue@email.com', '$2a$10$dSATX7AHM4L7M.ac7Ta.Xuee2q91jjXbSHmJv.YEZLG28SotO9Pji', false, true);
 INSERT INTO appUsers (name, email, password, locked, enabled)
-VALUES ('TrueTrue', 'TrueTrue@email.com', 'pass', true, true);
+VALUES ('TrueTrue', 'TrueTrue@email.com', '$2a$10$dSATX7AHM4L7M.ac7Ta.Xuee2q91jjXbSHmJv.YEZLG28SotO9Pji', true, true);
 INSERT INTO appUsers (name, email, password, locked, enabled)
-VALUES ('TrueFalse', 'TrueFalse@email.com', 'pass', true, false);
+VALUES ('TrueFalse', 'TrueFalse@email.com', '$2a$10$dSATX7AHM4L7M.ac7Ta.Xuee2q91jjXbSHmJv.YEZLG28SotO9Pji', true, false);
 INSERT INTO appUsers (name, email, password, locked, enabled)
-VALUES ('FalseFalse', 'FalseFalse@email.com', 'pass', false, false);
+VALUES ('FalseFalse', 'FalseFalse@email.com', '$2a$10$dSATX7AHM4L7M.ac7Ta.Xuee2q91jjXbSHmJv.YEZLG28SotO9Pji', false, false);
 

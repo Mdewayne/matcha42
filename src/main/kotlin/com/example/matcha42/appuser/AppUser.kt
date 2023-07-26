@@ -4,19 +4,21 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 data class AppUser(
-    private var id: Long,
-    private var name: String,
-    private var email: String,
-    private var password: String,
-    private var locked: Boolean,
-    private var enabled: Boolean
+    val name: String,
+    val email: String,
+    private val password: String,
+    val id: Long = 0,
+    val locked: Boolean = false,
+    val enabled: Boolean = true
 ) : UserDetails {
 
-    private var role: String = "USER"
+    companion object {
+        const val USER_ROLE: String = "USER"
+    }
 
     override fun getAuthorities(): List<SimpleGrantedAuthority> {
         return listOf(
-            SimpleGrantedAuthority(role))
+            SimpleGrantedAuthority(USER_ROLE))
     }
 
     override fun getPassword(): String {

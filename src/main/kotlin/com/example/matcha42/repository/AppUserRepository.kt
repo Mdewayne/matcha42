@@ -2,46 +2,52 @@ package com.example.matcha42.repository
 
 import com.example.matcha42.appuser.AppUser
 import org.springframework.jdbc.core.JdbcTemplate
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Repository
 
 @Repository
 class AppUserRepository(private val jdbcTemplate: JdbcTemplate) {
-
-    private var USER_NOT_FOUND: String = "user with email %s not found"
-    fun doDatabaseOperation() { //change
-        val query = "SELECT * FROM appUsers"
-        val results = jdbcTemplate.queryForList(query)
-        results.forEach { row ->
-            row.forEach { (columnName, value) ->
-                println("$columnName: $value")
-            }
-        }
+    companion object {
+        const val USER_NOT_FOUND: String = "user with email %s not found"
     }
 
-    fun findByEmail(email: String) : UserDetails {
+    fun findByEmail(email: String) : AppUser {
         val query = "SELECT * FROM appUsers WHERE email = ?"
         val results = jdbcTemplate.queryForList(query, email)
         if(results.isEmpty())
-            throw UsernameNotFoundException(String.format(USER_NOT_FOUND, email))
+            throw UsernameNotFoundException(
+                String.format(USER_NOT_FOUND, email))
         val userRow = results[0]
         return AppUser(
-            userRow["id"] as Long,
             userRow["name"] as String,
             email,
             userRow["password"] as String,
+            userRow["id"] as Long,
             userRow["locked"] as Boolean,
             userRow["enabled"] as Boolean
         )
 
     }
-//    fun save(user: AppUser) {
-//        val sql = "INSERT INTO appUsers (username, email) VALUES (?, ?)"
-//        jdbcTemplate.update(sql, user.username, user.email)
-//    }
+    fun save(appUser: AppUser) {
+        val sql = "INSERT INTO appusers (name, email, password, locked, enabled)" +
+                " VALUES (?, ?, ?, ?, ?)"
+        jdbcTemplate.update(
+            sql,
+            appUser.name,
+            appUser.email,
+            appUser.password,
+            appUser.locked,
+            appUser.enabled)
+
+        jdbcTemplate
+    }
+
+    fun getAppUserIdByEmail(email: String): Long {
+        val sql = "SELECT id FROM appusers WHERE email = ?"
+        return jdbcTemplate.queryForObject(sql, Long::class.java, email)
+    }
 //
-//    fun findAll(): List<AppUser> {
+//    fun findAll(): List<AppUser> { //FIXME
 //        val sql = "SELECT * FROM appUsers"
 //        return jdbcTemplate.query(sql) { rs, _ ->
 //            AppUser(
@@ -52,4 +58,5 @@ class AppUserRepository(private val jdbcTemplate: JdbcTemplate) {
 //            )
 //        }
 //    }
+
 }
