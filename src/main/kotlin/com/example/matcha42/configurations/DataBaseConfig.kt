@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import javax.sql.DataSource
 
 @Configuration
-class DatabaseConfig {
+class DatabaseConfig { //maybe change
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
     fun dataSourceProperties(): DataSourceProperties {
