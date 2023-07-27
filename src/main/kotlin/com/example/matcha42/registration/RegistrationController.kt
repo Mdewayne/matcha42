@@ -1,17 +1,21 @@
 package com.example.matcha42.registration
-
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
+import org.springframework.web.bind.annotation.*
 
 
-@RestController
-@RequestMapping("/registration")
-class RegistrationController (private var registrationService: RegistrationService ){
+@Controller
+class RegistrationController(private val registrationService: RegistrationService) {
 
-    @PostMapping
-    fun register(@RequestBody registrationRequest: RegistrationRequest) :String {
-        return registrationService.register(registrationRequest)
+    @GetMapping("/registration")
+    fun showRegistrationForm(model: Model): String {
+        model.addAttribute("registrationRequest", RegistrationRequest("", "", ""))
+        return "registration"
+    }
+
+    @PostMapping("/registration")
+    fun register(@ModelAttribute registrationRequest: RegistrationRequest): String {
+        registrationService.register(registrationRequest)
+        return "redirect:/hello"
     }
 }

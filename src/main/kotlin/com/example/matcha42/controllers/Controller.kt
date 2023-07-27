@@ -10,12 +10,17 @@ class MyController {
     fun hello(): String {
         return "hello"
     }
+
+    @GetMapping("/main")
+    fun main(): String {
+        return "main"
+    }
     @GetMapping("/login")
     fun login(): String {
         return "login"
     }
-    @GetMapping("/registration")
-    fun registration(): String {
-        return "registration"
-    }
+//    @GetMapping("/registration")
+//    fun registration(): String {
+//        return "registration"
+//    }
 }
